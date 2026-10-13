@@ -1,0 +1,277 @@
+{
+  "nodes": {
+    "taste": {
+      "id": "taste",
+      "type": "Skill",
+      "label": "Taste & Ultra-Luxury Aesthetic Direction",
+      "metadata": {},
+      "updatedAt": "2026-10-13T15:03:04.245Z"
+    },
+    "motion": {
+      "id": "motion",
+      "type": "Skill",
+      "label": "2026 Kinetic Interaction & Fluid Sheen",
+      "metadata": {},
+      "updatedAt": "2026-10-13T15:03:04.247Z"
+    },
+    "spatial3d": {
+      "id": "spatial3d",
+      "type": "Skill",
+      "label": "3D Spatial Twin & Amenity Waypoint Navigation",
+      "metadata": {},
+      "updatedAt": "2026-10-13T15:03:04.248Z"
+    },
+    "uiux": {
+      "id": "uiux",
+      "type": "Skill",
+      "label": "Editorial UI/UX & Non-Blocking HUD Architecture",
+      "metadata": {},
+      "updatedAt": "2026-10-13T15:03:04.250Z"
+    },
+    "rera": {
+      "id": "rera",
+      "type": "Skill",
+      "label": "Indian Real Estate Legal & RERA Valuation Integrity",
+      "metadata": {},
+      "updatedAt": "2026-10-13T15:03:04.251Z"
+    },
+    "e2e": {
+      "id": "e2e",
+      "type": "Skill",
+      "label": "Live Playwright Browser Testing & Visual Verification",
+      "metadata": {},
+      "updatedAt": "2026-10-13T15:03:04.270Z"
+    },
+    "bro4a": {
+      "id": "bro4a",
+      "type": "Brother",
+      "label": "Brother 4A (Aesthetic Visionary)",
+      "metadata": {
+        "model": "cohere/north-mini-code:free",
+        "skill": "taste"
+      },
+      "updatedAt": "2026-10-13T15:03:04.286Z"
+    },
+    "bro4b": {
+      "id": "bro4b",
+      "type": "Brother",
+      "label": "Brother 4B (Luxury Materiality Director)",
+      "metadata": {
+        "model": "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free",
+        "skill": "taste"
+      },
+      "updatedAt": "2026-10-13T15:03:04.301Z"
+    },
+    "bro2a": {
+      "id": "bro2a",
+      "type": "Brother",
+      "label": "Brother 2A (Micro-Spring Dynamicist)",
+      "metadata": {
+        "model": "liquid/lfm-2.5-2.6b:free",
+        "skill": "motion"
+      },
+      "updatedAt": "2026-10-13T15:03:04.313Z"
+    },
+    "bro2b": {
+      "id": "bro2b",
+      "type": "Brother",
+      "label": "Brother 2B (Liquid Titanium Fluid Engineer)",
+      "metadata": {
+        "model": "nvidia/nemotron-3.5-lightning:free",
+        "skill": "motion"
+      },
+      "updatedAt": "2026-10-13T15:03:04.330Z"
+    },
+    "bro7a": {
+      "id": "bro7a",
+      "type": "Brother",
+      "label": "Brother 7A (3D Spatial Geometry Master)",
+      "metadata": {
+        "model": "nvidia/nemotron-3-super-120b-a12b:free",
+        "skill": "spatial3d"
+      },
+      "updatedAt": "2026-10-13T15:03:04.365Z"
+    },
+    "bro7b": {
+      "id": "bro7b",
+      "type": "Brother",
+      "label": "Brother 7B (Amenity Lighting & Solar Dial Specialist)",
+      "metadata": {
+        "model": "liquid/lfm-2.5-2.6b:free",
+        "skill": "spatial3d"
+      },
+      "updatedAt": "2026-10-13T15:03:04.367Z"
+    },
+    "bro1a": {
+      "id": "bro1a",
+      "type": "Brother",
+      "label": "Brother 1A (Editorial Layout Architect)",
+      "metadata": {
+        "model": "cohere/north-mini-code:free",
+        "skill": "uiux"
+      },
+      "updatedAt": "2026-10-13T15:03:04.369Z"
+    },
+    "bro1b": {
+      "id": "bro1b",
+      "type": "Brother",
+      "label": "Brother 1B (Ergonomic Navigation Craftsman)",
+      "metadata": {
+        "model": "nvidia/nemotron-3.5-lightning:free",
+        "skill": "uiux"
+      },
+      "updatedAt": "2026-10-13T15:03:04.377Z"
+    },
+    "bro3a": {
+      "id": "bro3a",
+      "type": "Brother",
+      "label": "Brother 3A (RERA Compliance Specialist)",
+      "metadata": {
+        "model": "System Engine",
+        "skill": "rera"
+      },
+      "updatedAt": "2026-10-13T15:03:04.380Z"
+    },
+    "bro3b": {
+      "id": "bro3b",
+      "type": "Brother",
+      "label": "Brother 3B (Valuation & Lining Nums Guardian)",
+      "metadata": {
+        "model": "System Engine",
+        "skill": "rera"
+      },
+      "updatedAt": "2026-10-13T15:03:04.383Z"
+    },
+    "bro5a": {
+      "id": "bro5a",
+      "type": "Brother",
+      "label": "Brother 5A (Playwright Desktop Tester)",
+      "metadata": {
+        "model": "Chromium Engine",
+        "skill": "e2e"
+      },
+      "updatedAt": "2026-10-13T15:03:04.385Z"
+    },
+    "bro5b": {
+      "id": "bro5b",
+      "type": "Brother",
+      "label": "Brother 5B (Mobile Touch & Overflow Auditor)",
+      "metadata": {
+        "model": "Chromium Engine",
+        "skill": "e2e"
+      },
+      "updatedAt": "2026-10-13T15:03:04.386Z"
+    }
+  },
+  "edges": [
+    {
+      "source": "bro4a",
+      "target": "taste",
+      "relation": "PRACTICES_SKILL",
+      "weight": 1
+    },
+    {
+      "source": "bro4b",
+      "target": "taste",
+      "relation": "PRACTICES_SKILL",
+      "weight": 1
+    },
+    {
+      "source": "bro2a",
+      "target": "motion",
+      "relation": "PRACTICES_SKILL",
+      "weight": 1
+    },
+    {
+      "source": "bro2b",
+      "target": "motion",
+      "relation": "PRACTICES_SKILL",
+      "weight": 1
+    },
+    {
+      "source": "bro7a",
+      "target": "spatial3d",
+      "relation": "PRACTICES_SKILL",
+      "weight": 1
+    },
+    {
+      "source": "bro7b",
+      "target": "spatial3d",
+      "relation": "PRACTICES_SKILL",
+      "weight": 1
+    },
+    {
+      "source": "bro1a",
+      "target": "uiux",
+      "relation": "PRACTICES_SKILL",
+      "weight": 1
+    },
+    {
+      "source": "bro1b",
+      "target": "uiux",
+      "relation": "PRACTICES_SKILL",
+      "weight": 1
+    },
+    {
+      "source": "bro3a",
+      "target": "rera",
+      "relation": "PRACTICES_SKILL",
+      "weight": 1
+    },
+    {
+      "source": "bro3b",
+      "target": "rera",
+      "relation": "PRACTICES_SKILL",
+      "weight": 1
+    },
+    {
+      "source": "bro5a",
+      "target": "e2e",
+      "relation": "PRACTICES_SKILL",
+      "weight": 1
+    },
+    {
+      "source": "bro5b",
+      "target": "e2e",
+      "relation": "PRACTICES_SKILL",
+      "weight": 1
+    },
+    {
+      "source": "bro4a",
+      "target": "bro4b",
+      "relation": "PAIRED_COLLABORATION",
+      "weight": 1
+    },
+    {
+      "source": "bro2a",
+      "target": "bro2b",
+      "relation": "PAIRED_COLLABORATION",
+      "weight": 1
+    },
+    {
+      "source": "bro7a",
+      "target": "bro7b",
+      "relation": "PAIRED_COLLABORATION",
+      "weight": 1
+    },
+    {
+      "source": "bro1a",
+      "target": "bro1b",
+      "relation": "PAIRED_COLLABORATION",
+      "weight": 1
+    },
+    {
+      "source": "bro3a",
+      "target": "bro3b",
+      "relation": "PAIRED_COLLABORATION",
+      "weight": 1
+    },
+    {
+      "source": "bro5a",
+      "target": "bro5b",
+      "relation": "PAIRED_COLLABORATION",
+      "weight": 1
+    }
+  ],
+  "lastUpdated": "2026-10-13T15:03:04.386Z"
+}

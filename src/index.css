@@ -1,0 +1,293 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-luxury-bg text-slate-100 font-sans;
+    overflow-x: hidden;
+    font-variant-numeric: lining-nums tabular-nums;
+  }
+
+  /* Ensure numbers across all fonts always share the same baseline level and don't drop down */
+  .font-serif, .font-sans, .font-mono, h1, h2, h3, h4, h5, h6 {
+    font-variant-numeric: lining-nums proportional-nums;
+  }
+}
+
+/* Custom Luxury Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #08090b;
+}
+::-webkit-scrollbar-thumb {
+  background: #2a2c36;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #d4af37;
+}
+
+/* Glassmorphism & 2026 Liquid Glass Styles */
+.glass-panel {
+  background: rgba(15, 17, 21, 0.72);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 
+    0 10px 30px -10px rgba(0, 0, 0, 0.5),
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.1);
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-panel:hover {
+  border-color: rgba(212, 175, 55, 0.35);
+  box-shadow: 
+    0 20px 40px -15px rgba(0, 0, 0, 0.7),
+    0 0 25px -5px rgba(212, 175, 55, 0.15),
+    inset 0 1px 2px 0 rgba(255, 255, 255, 0.2);
+}
+
+/* 2026 State-of-the-Art Liquid Glass Prism & Specular Edge */
+.liquid-glass {
+  position: relative;
+  background: radial-gradient(120% 120% at 20% 20%, rgba(255, 255, 255, 0.09) 0%, rgba(255, 255, 255, 0.02) 60%, rgba(0, 0, 0, 0.4) 100%),
+              rgba(16, 19, 26, 0.65);
+  backdrop-filter: blur(24px) saturate(190%);
+  -webkit-backdrop-filter: blur(24px) saturate(190%);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 
+    0 20px 50px -15px rgba(0, 0, 0, 0.75),
+    inset 0 1px 2px 0 rgba(255, 255, 255, 0.35),
+    inset 0 -2px 4px 0 rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.liquid-glass::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 70%;
+  height: 100%;
+  background: linear-gradient(
+    90deg, 
+    transparent 0%, 
+    rgba(255, 255, 255, 0.06) 30%, 
+    rgba(212, 175, 55, 0.2) 50%, 
+    rgba(255, 255, 255, 0.06) 70%, 
+    transparent 100%
+  );
+  transform: skewX(-22deg);
+  pointer-events: none;
+  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.liquid-glass:hover::before {
+  left: 180%;
+  transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-panel-gold {
+  background: radial-gradient(140% 140% at 30% 10%, rgba(212, 175, 55, 0.12) 0%, rgba(23, 25, 32, 0.8) 70%),
+              rgba(15, 17, 23, 0.85);
+  backdrop-filter: blur(24px) saturate(190%);
+  -webkit-backdrop-filter: blur(24px) saturate(190%);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  box-shadow: 
+    0 15px 45px -10px rgba(0, 0, 0, 0.7),
+    0 0 30px -5px rgba(212, 175, 55, 0.2),
+    inset 0 1px 2px 0 rgba(255, 255, 255, 0.3);
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-panel-gold:hover {
+  border-color: rgba(212, 175, 55, 0.55);
+  box-shadow: 
+    0 25px 60px -15px rgba(0, 0, 0, 0.8),
+    0 0 45px -5px rgba(212, 175, 55, 0.35),
+    inset 0 1px 3px 0 rgba(255, 255, 255, 0.45);
+}
+
+/* Liquid Titanium Magnetic Sheen Layer */
+.glass-panel, .glass-panel-gold, .card-buoyancy-hover, .estate-card {
+  position: relative;
+  overflow: hidden;
+  transform-style: preserve-3d;
+}
+
+.glass-panel::before, .glass-panel-gold::before, .card-buoyancy-hover::before, .estate-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    450px circle at var(--mouse-x, -999px) var(--mouse-y, -999px),
+    rgba(212, 175, 55, var(--sheen-opacity, 0)),
+    transparent 70%
+  );
+  z-index: 1;
+  transition: opacity 0.3s ease;
+}
+
+/* Fluid Organic Blobs Morphing Keyframes */
+@keyframes fluidBlob1 {
+  0%, 100% {
+    transform: translate(0px, 0px) scale(1) rotate(0deg);
+  }
+  33% {
+    transform: translate(30px, -40px) scale(1.12) rotate(12deg);
+  }
+  66% {
+    transform: translate(-25px, 25px) scale(0.92) rotate(-8deg);
+  }
+}
+
+@keyframes fluidBlob2 {
+  0%, 100% {
+    transform: translate(0px, 0px) scale(1) rotate(0deg);
+  }
+  33% {
+    transform: translate(-35px, 35px) scale(1.08) rotate(-15deg);
+  }
+  66% {
+    transform: translate(25px, -30px) scale(0.94) rotate(10deg);
+  }
+}
+
+@keyframes liquidShimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes floatGentle {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.75;
+    transform: scale(1.05);
+  }
+}
+
+.animate-fluid-blob-1 {
+  animation: fluidBlob1 18s ease-in-out infinite;
+  will-change: transform;
+}
+
+.animate-fluid-blob-2 {
+  animation: fluidBlob2 22s ease-in-out infinite;
+  will-change: transform;
+}
+
+.animate-float-gentle {
+  animation: floatGentle 6s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 5s ease-in-out infinite;
+}
+
+.gold-glow {
+  text-shadow: 0 0 25px rgba(212, 175, 55, 0.4);
+}
+
+.luxury-border-glow:hover {
+  border-color: rgba(212, 175, 55, 0.5);
+  box-shadow: 0 0 25px rgba(212, 175, 55, 0.15);
+}
+
+/* =========================================================================
+   THE 4 CONSISTENT PHYSICAL MOTION SYSTEMS (Unified Across Entire Platform)
+   ========================================================================= */
+
+/* SUITE 1: CARDS & CONTAINERS — Fluid Buoyancy Elevation */
+.card-buoyancy-hover {
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.45s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s ease;
+  will-change: transform, box-shadow;
+}
+.card-buoyancy-hover:hover {
+  transform: translateY(-5px);
+  box-shadow: 
+    0 22px 45px -12px rgba(0, 0, 0, 0.8),
+    0 0 25px -5px rgba(212, 175, 55, 0.18),
+    inset 0 1px 2px rgba(255, 255, 255, 0.2);
+}
+
+/* SUITE 2: PRIMARY ACTION BUTTONS — Decisive Sovereign Seal Stamp */
+@keyframes physicalSealStamp {
+  0% { transform: scale(1); }
+  40% { transform: scale(0.94) translateY(1.5px); }
+  75% { transform: scale(1.02) translateY(-0.5px); }
+  100% { transform: scale(1) translateY(0); }
+}
+.btn-primary-physical {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease;
+}
+.btn-primary-physical:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px -6px rgba(212, 175, 55, 0.4);
+}
+.btn-primary-physical:active {
+  animation: physicalSealStamp 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 12px -2px rgba(212, 175, 55, 0.3);
+}
+
+/* SUITE 3: SECONDARY CONTROLS & PILLS — Foundation Micro-Compression */
+.btn-secondary-physical {
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  will-change: transform;
+}
+.btn-secondary-physical:hover {
+  transform: translateY(-1.5px);
+}
+.btn-secondary-physical:active {
+  transform: translateY(1.5px) scale(0.97);
+}
+
+/* SUITE 4: FORM INPUTS & SELECTS — Optical Specular Expansion */
+.input-optical-physical {
+  transition: border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease;
+}
+.input-optical-physical:focus {
+  border-color: rgba(212, 175, 55, 0.6);
+  box-shadow: 
+    0 0 0 3px rgba(212, 175, 55, 0.12),
+    inset 0 1px 2px rgba(0, 0, 0, 0.4);
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+/* Base button and canvas definitions */
+button, [role="button"], a {
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease;
+}
+
+canvas {
+  touch-action: none;
+}
+
+
+
+
