@@ -35,7 +35,7 @@ export default function Navbar({ activePage, setActivePage, onOpenContactModal }
             className="flex items-center space-x-3.5 group text-left shrink-0"
           >
             <div className="w-10 h-10 rounded-xl bg-[#0B0D13] border border-gold-500/40 flex items-center justify-center p-1.5 shadow-lg shadow-gold-500/20 group-hover:border-gold-400 transition-all">
-              <img src="/favicon.svg" alt="Aura Privé" className="w-full h-full object-contain" />
+              <img src={`${(import.meta.env.BASE_URL || '/').replace(/\/$/, '')}/favicon.svg`} alt="Aura Privé" className="w-full h-full object-contain" />
             </div>
             <div className="flex flex-col">
               <span className="font-serif text-lg tracking-[0.25em] font-medium text-white group-hover:text-gold-400 transition-colors uppercase whitespace-nowrap">

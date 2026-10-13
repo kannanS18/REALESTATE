@@ -234,12 +234,13 @@ export default function ThreeVillaViewer({ onBookTour }) {
 
     const loader = new GLTFLoader();
     const dracoLoader = new DRACOLoader();
-    dracoLoader.setDecoderPath('/draco/gltf/');
+    const baseUrl = (import.meta.env.BASE_URL || '/').replace(/\/$/, '');
+    dracoLoader.setDecoderPath(`${baseUrl}/draco/gltf/`);
     loader.setDRACOLoader(dracoLoader);
 
     const modelUrl = modelKey === 'mansion' 
-      ? '/models/luxury_grand_mansion.glb' 
-      : '/models/modern_home.glb';
+      ? `${baseUrl}/models/luxury_grand_mansion.glb` 
+      : `${baseUrl}/models/modern_home.glb`;
 
     loader.load(
       modelUrl,
