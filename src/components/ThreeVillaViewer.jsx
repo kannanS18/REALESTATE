@@ -226,8 +226,20 @@ export default function ThreeVillaViewer({ onBookTour }) {
     setIsLoading(true);
     setLoadProgress(15);
 
-    // Remove old model if present
+    // Dispose old model resources to free mobile GPU memory
     if (currentModelGroupRef.current) {
+      currentModelGroupRef.current.traverse((child) => {
+        if (child.isMesh) {
+          if (child.geometry) child.geometry.dispose();
+          if (child.material) {
+            if (Array.isArray(child.material)) {
+              child.material.forEach((m) => m?.dispose());
+            } else {
+              child.material.dispose();
+            }
+          }
+        }
+      });
       scene.remove(currentModelGroupRef.current);
       currentModelGroupRef.current = null;
     }
@@ -348,27 +360,31 @@ export default function ThreeVillaViewer({ onBookTour }) {
     camera.position.set(28, 16, 28);
     cameraRef.current = camera;
 
-    // 3. WebGL Renderer
+    // 3. WebGL Renderer - Mobile performance optimized!
+    const isMobileDevice = typeof window !== 'undefined' && window.innerWidth < 768;
+
     const renderer = new THREE.WebGLRenderer({
-      antialias: true,
+      antialias: !isMobileDevice,
       powerPreference: 'high-performance',
-      alpha: false
+      alpha: false,
+      precision: isMobileDevice ? 'mediump' : 'highp',
+      stencil: false
     });
     renderer.setSize(container.clientWidth, container.clientHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setPixelRatio(isMobileDevice ? Math.min(window.devicePixelRatio, 1.4) : Math.min(window.devicePixelRatio, 2));
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.25;
     renderer.shadowMap.enabled = true;
-    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    renderer.shadowMap.type = isMobileDevice ? THREE.PCFShadowMap : THREE.PCFSoftShadowMap;
     container.appendChild(renderer.domElement);
     rendererRef.current = renderer;
 
-    // 4. OrbitControls - Natural, fluid, non-blocking
+    // 4. OrbitControls - Natural, fluid, non-blocking touch interaction
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
-    controls.dampingFactor = 0.08;
-    controls.rotateSpeed = 0.85;
-    controls.zoomSpeed = 1.0;
+    controls.dampingFactor = isMobileDevice ? 0.12 : 0.08;
+    controls.rotateSpeed = isMobileDevice ? 1.15 : 0.85; // Faster, lighter thumb rotation on mobile
+    controls.zoomSpeed = isMobileDevice ? 1.25 : 1.0;
     controls.panSpeed = 0.8;
     controls.maxPolarAngle = Math.PI / 2 - 0.05; // Prevent flipping below ground
     controls.minPolarAngle = 0.1; // Prevent top-pole gimbal lock
@@ -377,6 +393,7 @@ export default function ThreeVillaViewer({ onBookTour }) {
     controls.autoRotate = false;
     controls.autoRotateSpeed = 0.8;
     controls.target.set(0, 3.5, 0); // Fixed, stable center of orbit
+    controls.touches = { ONE: THREE.TOUCH.ROTATE, TWO: THREE.TOUCH.DOLLY_PAN };
     controlsRef.current = controls;
 
     // Cancel any scripted camera movement immediately on user contact
@@ -391,8 +408,9 @@ export default function ThreeVillaViewer({ onBookTour }) {
     const sunLight = new THREE.DirectionalLight(0xffecd2, 3.2);
     sunLight.position.set(30, 48, 25);
     sunLight.castShadow = true;
-    sunLight.shadow.mapSize.width = 2048;
-    sunLight.shadow.mapSize.height = 2048;
+    const shadowRes = isMobileDevice ? 1024 : 2048;
+    sunLight.shadow.mapSize.width = shadowRes;
+    sunLight.shadow.mapSize.height = shadowRes;
     sunLight.shadow.bias = -0.0003;
     sunLight.shadow.camera.near = 0.5;
     sunLight.shadow.camera.far = 180;
@@ -627,7 +645,7 @@ export default function ThreeVillaViewer({ onBookTour }) {
   };
 
   return (
-    <div className="relative w-full h-[640px] lg:h-[780px] bg-[#07080b] rounded-3xl overflow-hidden border border-gold-500/30 shadow-2xl">
+    <div className="relative w-full h-[560px] sm:h-[660px] lg:h-[780px] bg-[#07080b] rounded-3xl overflow-hidden border border-gold-500/30 shadow-2xl touch-pan-y select-none">
       
       {/* Loading Overlay */}
       {isLoading && (
@@ -658,8 +676,80 @@ export default function ThreeVillaViewer({ onBookTour }) {
         className="w-full h-full cursor-grab active:cursor-grabbing touch-none select-none" 
       />
 
-      {/* Top Left Live Badge & Model Selector (Pointer events strictly on buttons) */}
-      <div className="absolute top-5 left-5 z-10 pointer-events-none">
+      {/* MOBILE TOP CONTROLS (Dedicated, non-overlapping touch-optimized controls for mobile) */}
+      <div className="sm:hidden absolute top-3 inset-x-3 z-20 pointer-events-none space-y-2">
+        {/* Full-width Segmented Model Switcher - Big 44px touch targets */}
+        <div className="p-1.5 rounded-2xl bg-black/85 backdrop-blur-xl border border-white/20 grid grid-cols-2 gap-2 pointer-events-auto shadow-2xl">
+          <button
+            onClick={() => handleModelSwitch('mansion')}
+            className={`min-h-[44px] px-3 py-2 rounded-xl text-xs font-semibold transition-all flex items-center justify-center gap-1.5 active:scale-95 ${
+              activeModel === 'mansion'
+                ? 'bg-gold-500 text-black font-bold shadow-lg shadow-gold-500/30 ring-2 ring-gold-400'
+                : 'text-slate-300 hover:text-white bg-white/5 active:bg-white/10'
+            }`}
+          >
+            <Crown className="w-4 h-4 shrink-0" />
+            <span className="truncate lining-nums">Worli (₹145 Cr)</span>
+          </button>
+          
+          <button
+            onClick={() => handleModelSwitch('villa')}
+            className={`min-h-[44px] px-3 py-2 rounded-xl text-xs font-semibold transition-all flex items-center justify-center gap-1.5 active:scale-95 ${
+              activeModel === 'villa'
+                ? 'bg-gold-500 text-black font-bold shadow-lg shadow-gold-500/30 ring-2 ring-gold-400'
+                : 'text-slate-300 hover:text-white bg-white/5 active:bg-white/10'
+            }`}
+          >
+            <Building2 className="w-4 h-4 shrink-0" />
+            <span className="truncate lining-nums">Goa (₹48.5 Cr)</span>
+          </button>
+        </div>
+
+        {/* Mobile Perspectives Ribbon - Horizontally scrollable, cleanly separated */}
+        <div className="glass-panel p-1.5 rounded-2xl flex items-center space-x-1.5 border border-white/10 pointer-events-auto shadow-xl backdrop-blur-xl overflow-x-auto scrollbar-none">
+          <div className="px-2 py-1 text-[9px] uppercase tracking-widest text-gold-400 font-bold flex items-center gap-1 border-r border-white/10 shrink-0">
+            <Eye className="w-3 h-3 text-gold-400" />
+            <span>Views</span>
+          </div>
+
+          {currentRooms.map((spot, idx) => {
+            const isSelected = activeHotspot?.id === spot.id;
+            return (
+              <button
+                key={spot.id}
+                onClick={() => handleRoomInspectClick(spot)}
+                className={`min-h-[36px] px-3 py-1.5 rounded-xl text-xs font-medium transition-all flex items-center space-x-1.5 shrink-0 ${
+                  isSelected
+                    ? 'bg-gold-500 text-black font-bold shadow-md shadow-gold-500/25 ring-1 ring-gold-400'
+                    : 'text-slate-300 hover:text-white bg-white/5 active:bg-white/10'
+                }`}
+              >
+                <span className="text-[10px] font-mono opacity-60">0{idx + 1}</span>
+                <span className="whitespace-nowrap font-sans">
+                  {spot.title.split(' ')[0]} {spot.title.split(' ')[1] || ''}
+                </span>
+              </button>
+            );
+          })}
+
+          {activeHotspot && (
+            <button
+              onClick={() => {
+                setActiveHotspot(null);
+                const orbitTargetY = activeModel === 'mansion' ? 5.5 : 3.5;
+                transitionCameraTo(new THREE.Vector3(24, 15, 28), new THREE.Vector3(0, orbitTargetY, 0));
+              }}
+              className="px-2.5 py-1.5 rounded-xl text-xs text-slate-300 bg-white/10 shrink-0 font-bold"
+              title="Reset View"
+            >
+              ✕
+            </button>
+          )}
+        </div>
+      </div>
+
+      {/* DESKTOP TOP LEFT (Hidden on mobile to eliminate overlap) */}
+      <div className="hidden sm:block absolute top-5 left-5 z-10 pointer-events-none">
         <div className="flex items-center space-x-2 bg-black/70 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-gold-500/40 text-xs font-semibold text-gold-400">
           <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
           <span>PRIME RESIDENTIAL ATELIER • 60 FPS</span>
@@ -669,11 +759,11 @@ export default function ThreeVillaViewer({ onBookTour }) {
           {activeModel === 'mansion' ? 'The Sovereign Sea-Face Bungalow • Worli, Mumbai' : 'Villa Aurora • Assagao, North Goa'}
         </h3>
         
-        {/* Model Switcher Buttons */}
+        {/* Desktop Model Switcher Buttons */}
         <div className="mt-2.5 flex space-x-2 pointer-events-auto">
           <button
             onClick={() => handleModelSwitch('mansion')}
-            className={`px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all flex items-center gap-1.5 btn-secondary-physical ${
+            className={`px-3.5 py-2 rounded-xl text-xs font-semibold border transition-all flex items-center gap-1.5 btn-secondary-physical ${
               activeModel === 'mansion'
                 ? 'bg-gold-500 text-black border-gold-400 shadow-xl shadow-gold-500/20 font-bold'
                 : 'bg-black/60 text-slate-300 border-white/10 hover:border-gold-500/40'
@@ -685,7 +775,7 @@ export default function ThreeVillaViewer({ onBookTour }) {
           
           <button
             onClick={() => handleModelSwitch('villa')}
-            className={`px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all flex items-center gap-1.5 btn-secondary-physical ${
+            className={`px-3.5 py-2 rounded-xl text-xs font-semibold border transition-all flex items-center gap-1.5 btn-secondary-physical ${
               activeModel === 'villa'
                 ? 'bg-gold-500 text-black border-gold-400 shadow-xl shadow-gold-500/20 font-bold'
                 : 'bg-black/60 text-slate-300 border-white/10 hover:border-gold-500/40'
@@ -727,25 +817,25 @@ export default function ThreeVillaViewer({ onBookTour }) {
       </div>
 
       {/* Right Side Zoom & Reset Controls */}
-      <div className="absolute right-5 top-1/2 -translate-y-1/2 z-10 flex flex-col space-y-2 pointer-events-none">
+      <div className="absolute right-3 sm:right-5 top-1/2 -translate-y-1/2 z-10 flex flex-col space-y-2 pointer-events-none">
         <div className="glass-panel p-1.5 rounded-2xl flex flex-col space-y-1 border border-white/10 pointer-events-auto shadow-xl">
           <button
             onClick={() => handleZoom(-5)}
-            className="p-2.5 rounded-xl hover:bg-white/10 text-slate-300 hover:text-white transition-colors"
+            className="p-2 sm:p-2.5 rounded-xl hover:bg-white/10 text-slate-300 hover:text-white transition-colors"
             title="Zoom In"
           >
             <ZoomIn className="w-4 h-4 text-gold-400" />
           </button>
           <button
             onClick={() => handleZoom(5)}
-            className="p-2.5 rounded-xl hover:bg-white/10 text-slate-300 hover:text-white transition-colors"
+            className="p-2 sm:p-2.5 rounded-xl hover:bg-white/10 text-slate-300 hover:text-white transition-colors"
             title="Zoom Out"
           >
             <ZoomOut className="w-4 h-4 text-gold-400" />
           </button>
           <button
             onClick={toggleDimensions}
-            className={`p-2.5 rounded-xl transition-colors ${
+            className={`p-2 sm:p-2.5 rounded-xl transition-colors ${
               showDimensions 
                 ? 'bg-gold-500 text-black shadow-lg shadow-gold-500/25' 
                 : 'hover:bg-white/10 text-slate-300 hover:text-white'
@@ -760,7 +850,7 @@ export default function ThreeVillaViewer({ onBookTour }) {
               const orbitTargetY = activeModel === 'mansion' ? 5.5 : 3.5;
               transitionCameraTo(new THREE.Vector3(24, 15, 28), new THREE.Vector3(0, orbitTargetY, 0));
             }}
-            className="p-2.5 rounded-xl hover:bg-white/10 text-slate-300 hover:text-white transition-colors border-t border-white/5"
+            className="p-2 sm:p-2.5 rounded-xl hover:bg-white/10 text-slate-300 hover:text-white transition-colors border-t border-white/5"
             title="Reset Establishing View"
           >
             <RotateCcw className="w-4 h-4 text-slate-400 hover:text-gold-400" />
@@ -768,12 +858,12 @@ export default function ThreeVillaViewer({ onBookTour }) {
         </div>
       </div>
 
-      {/* Architectural Waypoint Ribbon: Real Estate Focal Points & Sightlines */}
-      <div className="absolute top-32 left-5 z-10 pointer-events-none">
+      {/* DESKTOP Architectural Waypoint Ribbon */}
+      <div className="hidden sm:block absolute top-32 left-5 z-10 pointer-events-none">
         <div className="glass-panel p-1.5 rounded-2xl flex items-center space-x-1.5 border border-white/10 pointer-events-auto shadow-xl backdrop-blur-xl">
           <div className="px-2.5 py-1 text-[10px] uppercase tracking-widest text-gold-400 font-semibold flex items-center gap-1.5 border-r border-white/10">
             <Eye className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">Estate Perspectives</span>
+            <span>Estate Perspectives</span>
           </div>
 
           {currentRooms.map((spot, idx) => {
@@ -814,9 +904,9 @@ export default function ThreeVillaViewer({ onBookTour }) {
         </div>
       </div>
 
-      {/* Active Hotspot Architectural Information Panel (Elegantly docked at Top-Right below Acquisition Price) */}
+      {/* Active Hotspot Architectural Information Panel (Mobile docked at bottom, desktop at top-right) */}
       {activeHotspot && (
-        <div className="absolute top-28 right-5 z-20 w-80 sm:w-96 glass-panel-gold p-4 sm:p-5 rounded-2xl animate-in fade-in slide-in-from-right-4 duration-300 pointer-events-auto shadow-2xl border border-gold-500/40">
+        <div className="absolute bottom-24 sm:top-28 inset-x-3 sm:inset-x-auto sm:right-5 z-20 sm:w-96 glass-panel-gold p-4 sm:p-5 rounded-2xl animate-in fade-in duration-300 pointer-events-auto shadow-2xl border border-gold-500/40 max-h-[280px] overflow-y-auto">
           <div className="flex justify-between items-start gap-2">
             <span className="text-[10px] uppercase tracking-widest text-gold-400 font-bold flex items-center gap-1.5">
               <Sparkles className="w-3 h-3 text-gold-400" /> Spatial Framing Active
