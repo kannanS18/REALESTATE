@@ -7,7 +7,6 @@ import ServicesSection from './components/ServicesSection';
 import AboutSection from './components/AboutSection';
 import JournalSection from './components/JournalSection';
 import ContactSection from './components/ContactSection';
-import GraphifyProjectMap from './components/GraphifyProjectMap';
 import Footer from './components/Footer';
 import LiquidBackgroundMesh from './components/LiquidBackgroundMesh';
 import LiquidCursorOrb from './components/LiquidCursorOrb';
@@ -18,12 +17,10 @@ import { Box, Sparkles, ArrowRight, ShieldCheck, Eye, Layers, Crown } from 'luci
 const ThreeVillaViewer = lazy(() => import('./components/ThreeVillaViewer'));
 
 export default function App() {
-  // Check if initial hash or path is graphify
   const getInitialPage = () => {
     if (typeof window !== 'undefined') {
       const path = window.location.pathname.toLowerCase();
       const hash = window.location.hash.toLowerCase();
-      if (path.includes('graphify') || hash.includes('graphify')) return 'graphify';
       if (path.includes('3d') || hash.includes('3d')) return 'explore3d';
     }
     return 'home';
@@ -33,11 +30,11 @@ export default function App() {
   const [contactSubject, setContactSubject] = useState('General VIP Consultation');
   const [searchCriteria, setSearchCriteria] = useState(null);
 
-  // Sync with browser URL / hash for direct graphify URL navigation
+  // Sync with browser URL / hash for navigation
   React.useEffect(() => {
     const handleHashChange = () => {
       const hash = window.location.hash.replace('#', '').toLowerCase();
-      if (hash && ['home', 'explore3d', 'estates', 'services', 'about', 'journal', 'graphify', 'contact'].includes(hash)) {
+      if (hash && ['home', 'explore3d', 'estates', 'services', 'about', 'journal', 'contact'].includes(hash)) {
         setActivePage(hash);
       }
     };
@@ -219,13 +216,6 @@ export default function App() {
         {activePage === 'journal' && (
           <div className="pt-6">
             <JournalSection />
-          </div>
-        )}
-
-        {/* VIEW 7: GRAPHIFY KNOWLEDGE GRAPH & AGENT SWARM MAP */}
-        {activePage === 'graphify' && (
-          <div className="pt-6">
-            <GraphifyProjectMap />
           </div>
         )}
 

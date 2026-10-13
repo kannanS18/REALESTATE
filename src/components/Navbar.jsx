@@ -15,7 +15,6 @@ export default function Navbar({ activePage, setActivePage, onOpenContactModal }
     { id: 'services', label: 'Services' },
     { id: 'about', label: 'Heritage' },
     { id: 'journal', label: 'Journal' },
-    { id: 'graphify', label: 'Graphify' },
     { id: 'contact', label: 'Contact' },
   ];
 
