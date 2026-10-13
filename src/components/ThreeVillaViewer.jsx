@@ -33,6 +33,16 @@ export default function ThreeVillaViewer({ onBookTour }) {
   const starsGroupRef = useRef(null);
   const dimensionGroupRef = useRef(null);
   const isTransitioningCamera = useRef(false);
+  const mobileRibbonRef = useRef(null);
+
+  const scrollMobileRibbon = (direction) => {
+    if (mobileRibbonRef.current) {
+      mobileRibbonRef.current.scrollBy({
+        left: direction * 140,
+        behavior: 'smooth'
+      });
+    }
+  };
 
   // Update directional sunlight trajectory according to solar hour (6 AM - 7 PM)
   const updateSolarTrajectory = (hour) => {
@@ -612,8 +622,12 @@ export default function ThreeVillaViewer({ onBookTour }) {
   };
 
   // ROOM & ARCHITECTURAL HOTSPOT INSPECTION: Smooth Non-Locking Camera Fly-To
-  const handleRoomInspectClick = (spot) => {
+  const handleRoomInspectClick = (spot, e) => {
     const orbitTargetY = activeModel === 'mansion' ? 5.5 : 3.5;
+
+    if (e?.currentTarget) {
+      e.currentTarget.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    }
 
     if (activeHotspot?.id === spot.id) {
       setActiveHotspot(null);
@@ -645,7 +659,7 @@ export default function ThreeVillaViewer({ onBookTour }) {
   };
 
   return (
-    <div className="relative w-full h-[560px] sm:h-[660px] lg:h-[780px] bg-[#07080b] rounded-3xl overflow-hidden border border-gold-500/30 shadow-2xl touch-pan-y select-none">
+    <div className="relative w-full h-[560px] sm:h-[660px] lg:h-[780px] bg-[#07080b] rounded-3xl overflow-hidden border border-gold-500/30 shadow-2xl select-none">
       
       {/* Loading Overlay */}
       {isLoading && (
@@ -705,46 +719,74 @@ export default function ThreeVillaViewer({ onBookTour }) {
           </button>
         </div>
 
-        {/* Mobile Perspectives Ribbon - Horizontally scrollable, cleanly separated */}
-        <div className="glass-panel p-1.5 rounded-2xl flex items-center space-x-1.5 border border-white/10 pointer-events-auto shadow-xl backdrop-blur-xl overflow-x-auto scrollbar-none">
-          <div className="px-2 py-1 text-[9px] uppercase tracking-widest text-gold-400 font-bold flex items-center gap-1 border-r border-white/10 shrink-0">
-            <Eye className="w-3 h-3 text-gold-400" />
-            <span>Views</span>
+        {/* Mobile Perspectives Ribbon - Smooth touch drag + chevron arrows for effortless navigation */}
+        <div className="relative flex items-center pointer-events-auto">
+          <button
+            onClick={() => scrollMobileRibbon(-1)}
+            className="w-7 h-10 rounded-l-xl bg-black/85 text-gold-400 hover:text-white flex items-center justify-center shrink-0 border border-r-0 border-white/20 active:scale-90 text-sm font-bold z-10"
+            aria-label="Scroll views left"
+          >
+            ‹
+          </button>
+
+          <div 
+            ref={mobileRibbonRef}
+            style={{
+              touchAction: 'pan-x',
+              WebkitOverflowScrolling: 'touch',
+              scrollbarWidth: 'none',
+              msOverflowStyle: 'none'
+            }}
+            className="flex-1 glass-panel px-2 py-1.5 flex items-center space-x-2 border-y border-white/10 shadow-xl backdrop-blur-xl overflow-x-auto scroll-smooth touch-pan-x overscroll-x-contain"
+          >
+            <div className="px-2 py-1 text-[9px] uppercase tracking-widest text-gold-400 font-bold flex items-center gap-1 border-r border-white/10 shrink-0">
+              <Eye className="w-3 h-3 text-gold-400" />
+              <span>Views</span>
+            </div>
+
+            {currentRooms.map((spot, idx) => {
+              const isSelected = activeHotspot?.id === spot.id;
+              return (
+                <button
+                  key={spot.id}
+                  onClick={(e) => handleRoomInspectClick(spot, e)}
+                  style={{ touchAction: 'manipulation' }}
+                  className={`min-h-[38px] px-3.5 py-1.5 rounded-xl text-xs font-medium transition-all flex items-center space-x-1.5 shrink-0 active:scale-95 ${
+                    isSelected
+                      ? 'bg-gold-500 text-black font-bold shadow-md shadow-gold-500/25 ring-2 ring-gold-400'
+                      : 'text-slate-200 hover:text-white bg-white/10 active:bg-white/20 border border-white/5'
+                  }`}
+                >
+                  <span className="text-[10px] font-mono opacity-60">0{idx + 1}</span>
+                  <span className="whitespace-nowrap font-sans font-medium">
+                    {spot.title.split(' ')[0]} {spot.title.split(' ')[1] || ''}
+                  </span>
+                </button>
+              );
+            })}
+
+            {activeHotspot && (
+              <button
+                onClick={() => {
+                  setActiveHotspot(null);
+                  const orbitTargetY = activeModel === 'mansion' ? 5.5 : 3.5;
+                  transitionCameraTo(new THREE.Vector3(24, 15, 28), new THREE.Vector3(0, orbitTargetY, 0));
+                }}
+                className="px-3 py-1.5 rounded-xl text-xs text-slate-300 bg-white/15 hover:bg-white/25 shrink-0 font-bold ml-1 active:scale-90"
+                title="Reset View"
+              >
+                ✕
+              </button>
+            )}
           </div>
 
-          {currentRooms.map((spot, idx) => {
-            const isSelected = activeHotspot?.id === spot.id;
-            return (
-              <button
-                key={spot.id}
-                onClick={() => handleRoomInspectClick(spot)}
-                className={`min-h-[36px] px-3 py-1.5 rounded-xl text-xs font-medium transition-all flex items-center space-x-1.5 shrink-0 ${
-                  isSelected
-                    ? 'bg-gold-500 text-black font-bold shadow-md shadow-gold-500/25 ring-1 ring-gold-400'
-                    : 'text-slate-300 hover:text-white bg-white/5 active:bg-white/10'
-                }`}
-              >
-                <span className="text-[10px] font-mono opacity-60">0{idx + 1}</span>
-                <span className="whitespace-nowrap font-sans">
-                  {spot.title.split(' ')[0]} {spot.title.split(' ')[1] || ''}
-                </span>
-              </button>
-            );
-          })}
-
-          {activeHotspot && (
-            <button
-              onClick={() => {
-                setActiveHotspot(null);
-                const orbitTargetY = activeModel === 'mansion' ? 5.5 : 3.5;
-                transitionCameraTo(new THREE.Vector3(24, 15, 28), new THREE.Vector3(0, orbitTargetY, 0));
-              }}
-              className="px-2.5 py-1.5 rounded-xl text-xs text-slate-300 bg-white/10 shrink-0 font-bold"
-              title="Reset View"
-            >
-              ✕
-            </button>
-          )}
+          <button
+            onClick={() => scrollMobileRibbon(1)}
+            className="w-7 h-10 rounded-r-xl bg-black/85 text-gold-400 hover:text-white flex items-center justify-center shrink-0 border border-l-0 border-white/20 active:scale-90 text-sm font-bold z-10"
+            aria-label="Scroll views right"
+          >
+            ›
+          </button>
         </div>
       </div>
 
