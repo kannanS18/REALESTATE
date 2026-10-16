@@ -37,7 +37,7 @@ export default function AboutSection({ onScheduleTour }) {
             <div className="space-y-4 text-slate-300 text-sm leading-relaxed font-light">
               <p>
                 Founded on the bedrock of uncompromised legal diligence, absolute discretion, and deep micro-market intelligence, 
-                <span className="text-gold-400 font-normal"> Aura Privé</span> is India's leading boutique consultancy for ultra-high-net-worth property transactions.
+                <span className="text-gold-400 font-normal"> SOLIS</span> is India's leading boutique consultancy for ultra-high-net-worth property transactions.
               </p>
               <p>
                 We do not deal in generic listings. Every bungalow, sea-facing penthouse, and private villa under our mandate 
@@ -76,7 +76,7 @@ export default function AboutSection({ onScheduleTour }) {
                 <p className="font-serif text-lg text-white italic mt-1">
                   "Real estate transactions must stand on absolute legal transparency, fair valuation, and fiduciary trust."
                 </p>
-                <span className="text-xs text-slate-400 block mt-1">— Advisory Board, Aura Privé</span>
+                <span className="text-xs text-slate-400 block mt-1">— Advisory Board, SOLIS</span>
               </div>
             </div>
           </div>

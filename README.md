@@ -1,4 +1,4 @@
-# Aura Privé — Sovereign Architectural Estates & 3D Spatial Twin Studio
+# SOLIS — Sovereign Architectural Estates & 3D Spatial Twin Studio
 
 > **Ultra-Prime Indian & Global Luxury Real Estate Portfolio (2026 Edition)**  
 > Developed with React 19, Three.js / WebGL, Tailwind CSS, Lucide Icons, and 2026 Kinetic Liquid Titanium Motion.
@@ -13,7 +13,7 @@
 
 ## 🏛️ Executive Overview
 
-**Aura Privé** is an exclusive digital atelier showcasing ultra-luxury residential properties across India’s most coveted enclaves (Malabar Hill, Lutyens' Delhi, Emirates Hills, and Jubilee Hills). 
+**SOLIS** is an exclusive digital atelier showcasing ultra-luxury residential properties across India’s most coveted enclaves (Malabar Hill, Lutyens' Delhi, Emirates Hills, and Jubilee Hills). 
 
 Every estate features:
 - **100% Freehold Title Verification & RERA Clearance**: Legal compliance and clear title deed assurances.
@@ -94,4 +94,4 @@ node scripts/brother5_live_tester.js
 
 ## 🛡️ License
 
-Private & Confidential © Aura Privé Atelier. All rights reserved.
+Private & Confidential © SOLIS Atelier. All rights reserved.

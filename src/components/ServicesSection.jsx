@@ -150,7 +150,7 @@ export default function ServicesSection({ onInquireService }) {
               Direct Representation with Absolute Due Diligence
             </h4>
             <p className="text-xs text-slate-300 max-w-xl font-light">
-              Every property marketed or represented by Aura Privé undergoes exhaustive legal title scrutiny, municipal clearance audits, and RERA compliance verification.
+              Every property marketed or represented by SOLIS undergoes exhaustive legal title scrutiny, municipal clearance audits, and RERA compliance verification.
             </p>
           </div>
           <button

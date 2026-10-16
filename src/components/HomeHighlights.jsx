@@ -329,7 +329,7 @@ export default function HomeHighlights({
                 "Transparent transactions, verified titles, and discreet representation for India's finest addresses."
               </h2>
               <p className="text-xs sm:text-sm text-slate-300 font-light leading-relaxed max-w-2xl">
-                Headquartered in Mumbai with dedicated advisory desks across New Delhi, Bengaluru, and Goa, Aura Privé advises industrialists, family offices, and NRI leaders on high-value residential and commercial real estate.
+                Headquartered in Mumbai with dedicated advisory desks across New Delhi, Bengaluru, and Goa, SOLIS advises industrialists, family offices, and NRI leaders on high-value residential and commercial real estate.
               </p>
               
               <div className="flex flex-wrap gap-8 pt-4">

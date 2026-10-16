@@ -111,7 +111,7 @@ export default function App() {
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 space-y-10">
             <div className="text-center max-w-3xl mx-auto space-y-4">
               <span className="text-xs uppercase tracking-[0.25em] text-gold-400 font-semibold flex items-center justify-center gap-2">
-                <Box className="w-4 h-4 text-gold-400" /> Aura 3D Spatial Twin Studio
+                <Box className="w-4 h-4 text-gold-400" /> SOLIS 3D Spatial Twin Studio
               </span>
               <h1 className="font-serif text-4xl sm:text-6xl text-white font-normal">
                 Virtual Habitation & Spatial Perspectives

@@ -33,7 +33,7 @@ export default function JournalSection() {
               <BookOpen className="w-3.5 h-3.5" /> Curated Real Estate Intelligence
             </span>
             <h2 className="font-serif text-3xl sm:text-5xl font-normal text-white">
-              The Aura Journal & Market Research
+              The Solis Journal & Market Research
             </h2>
             <p className="text-sm text-slate-400 max-w-xl font-light">
               Authoritative research papers on Indian luxury micro-markets, Lutyens' capital preservation, RERA jurisprudence, and prime rental yields.

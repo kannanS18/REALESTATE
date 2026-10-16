@@ -13,7 +13,7 @@ export const JOURNAL_ARTICLES = [
 
       Our transactional research indicates that single-owner bungalows and full-floor penthouses commanding unobstructed Arabian Sea horizons have seen sustained capital value appreciation, with prime trades exceeding ₹1,25,000 per sq ft. 
 
-      At Aura Privé, we advise client family offices to focus strictly on unencumbered, clear-title properties with direct coastal sea view easements that can never be obscured by future vertical developments.
+      At SOLIS, we advise client family offices to focus strictly on unencumbered, clear-title properties with direct coastal sea view easements that can never be obscured by future vertical developments.
     `
   },
   {
@@ -47,7 +47,7 @@ export const JOURNAL_ARTICLES = [
 
       Properties engineered with bespoke architectural cantilever footprints, private infinity pools, and integrated staff quarters in Assagao, Siolim, and Candolim generate reliable 10% to 14% annualized rental returns under professional concierge management.
 
-      Aura Privé's turnkey asset care division handles end-to-end leasing, luxury hospitality staffing, and preventative architectural maintenance, ensuring passive wealth generation for absentee estate owners.
+      SOLIS's turnkey asset care division handles end-to-end leasing, luxury hospitality staffing, and preventative architectural maintenance, ensuring passive wealth generation for absentee estate owners.
     `
   },
   {
@@ -62,7 +62,7 @@ export const JOURNAL_ARTICLES = [
     content: `
       The single greatest risk in Indian high-value real estate transactions is not pricing volatility, but encumbered or incomplete title histories.
 
-      Every transaction brokered by Aura Privé undergoes an uncompromised 30-year forensic registry audit. Our empanelled senior real estate attorneys verify ancestral revenue records (7/12 extracts, mutation entries, sanctioned building plans), confirm Section 11/14 RERA disclosures, and secure public notice clearances before any advance deposit is released.
+      Every transaction brokered by SOLIS undergoes an uncompromised 30-year forensic registry audit. Our empanelled senior real estate attorneys verify ancestral revenue records (7/12 extracts, mutation entries, sanctioned building plans), confirm Section 11/14 RERA disclosures, and secure public notice clearances before any advance deposit is released.
 
       This institutional rigor ensures that our buyers acquire pristine, bankable, and unchallengeable ownership rights that endure for generations.
     `

@@ -17,10 +17,10 @@ export default function Footer({ onNavClick }) {
           <div className="lg:col-span-2 space-y-4">
             <div className="flex items-center space-x-3">
               <div className="w-8 h-8 rounded-xl bg-gold-gradient flex items-center justify-center text-black font-serif font-bold text-base">
-                A
+                S
               </div>
               <span className="font-serif text-xl tracking-[0.2em] font-medium text-white">
-                AURA PRIVÉ
+                SOLIS
               </span>
             </div>
             <p className="text-slate-400 text-xs leading-relaxed max-w-sm font-light">
@@ -107,7 +107,7 @@ export default function Footer({ onNavClick }) {
         {/* Bottom Legal & Regulatory */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-slate-500">
           <div>
-            © 2026 Aura Privé Luxury Real Estate Advisory India Pvt. Ltd. All Rights Reserved.
+            © 2026 SOLIS Luxury Real Estate Advisory India Pvt. Ltd. All Rights Reserved.
           </div>
           <div className="flex space-x-6">
             <span>RERA Verification Mandate</span>

@@ -58,7 +58,7 @@ export default function HeroBanner({ onExplore3D, onBrowseEstates, onOpenBooking
 
             {/* Editorial Statement */}
             <p className="font-sans text-xs sm:text-sm lg:text-base text-slate-300 font-light leading-relaxed max-w-xl">
-              Aura Privé discreetly brokers India's rarest architectural landmarks — from coastal promontories in Assagao to sea-facing heritage estates on Worli Sea Face. We deliver complete legal title sovereignty, architectural spatial digital twins, and uncompromised discretion.
+              SOLIS discreetly brokers India's rarest architectural landmarks — from coastal promontories in Assagao to sea-facing heritage estates on Worli Sea Face. We deliver complete legal title sovereignty, architectural spatial digital twins, and uncompromised discretion.
             </p>
 
             {/* Discreet VIP Action Triggers: Elegant Exploration without Pressure */}

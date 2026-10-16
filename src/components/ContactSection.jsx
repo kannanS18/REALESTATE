@@ -109,7 +109,7 @@ export default function ContactSection({ prefilledSubject }) {
                   <Mail className="w-4 h-4 text-gold-400 shrink-0 mt-0.5" />
                   <div>
                     <span className="text-white font-medium block">Encrypted Desk</span>
-                    <span className="text-slate-400">advisory@auraprive.in</span>
+                    <span className="text-slate-400">advisory@solisestates.in</span>
                   </div>
                 </div>
               </div>
@@ -172,7 +172,7 @@ export default function ContactSection({ prefilledSubject }) {
                 <form onSubmit={handleSubmit} className="space-y-5">
                   <div className="space-y-1">
                     <h3 className="font-serif text-2xl text-white">Private Treaty Consultation</h3>
-                    <p className="text-xs text-slate-400">Direct transmission to the Aura Privé Managing Desk.</p>
+                    <p className="text-xs text-slate-400">Direct transmission to the SOLIS Managing Desk.</p>
                   </div>
 
                   {errorMsg && (
